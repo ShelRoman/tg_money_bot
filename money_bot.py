@@ -41,6 +41,7 @@ def process_msg(msg, date_):
     sheet = gc.open_by_key(os.environ['GS_TOKEN']).worksheet_by_title('Balance')
     sheet.insert_rows(sheet.rows - 1, len(total_res), values=total_res)
 
+
 echo_handler = MessageHandler(Filters.text, process_string)
 start_handler = CommandHandler('start', start)
 dispatcher.add_handler(echo_handler)
