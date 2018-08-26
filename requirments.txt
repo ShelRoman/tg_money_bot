@@ -1,0 +1,11 @@
+pygsheets
+python-telegram-bot
+telegram-export
+telegram
+google-api-python-client
+google-auth
+google-auth-httplib2
+gspread
+gspread-dataframe
+httplib2
+oauth2client
