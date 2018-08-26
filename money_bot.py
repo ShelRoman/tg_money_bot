@@ -30,15 +30,16 @@ def process_msg(msg, date_):
     res.append(value)
     res.append('-') if category != 'Cashed' else res.append('Cashed')
     res.append(category), res.append('Me'), res.append('-'), res.append(is_cash)
-    # add to google_spreadsheet
-    gc = pygsheets.authorize(service_file='client_secret.json')
-    sheet = gc.open_by_key(os.environ['GS_TOKEN']).worksheet_by_title('Balance')
-    sheet.insert_rows(sheet.rows - 1, 1, values=res)
+    total_res = [res]
+    # If cashed - create counterpart value
     if category == 'Cashed':
         res_cash = res.copy()
         res_cash[1], res_cash[2], res_cash[-1] = 'Income', str(abs(int(res_cash[2]))), '1'
-        sheet.insert_rows(sheet.rows - 1, 1, values=res_cash)
-
+        total_res.append(res_cash)
+    # add to google_spreadsheet
+    gc = pygsheets.authorize(service_file='client_secret.json')
+    sheet = gc.open_by_key(os.environ['GS_TOKEN']).worksheet_by_title('Balance')
+    sheet.insert_rows(sheet.rows - 1, len(total_res), values=total_res)
 
 echo_handler = MessageHandler(Filters.text, process_string)
 start_handler = CommandHandler('start', start)
