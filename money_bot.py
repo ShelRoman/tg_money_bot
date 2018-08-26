@@ -3,7 +3,11 @@ import re
 import pygsheets
 import os
 
-updater = Updater(token=os.environ['TGBOT_TOKEN'])
+
+tgbot_token = os.environ['TGBOT_TOKEN']
+gs_token = os.environ['GS_TOKEN']
+
+updater = Updater(token=tgbot_token)
 dispatcher = updater.dispatcher
 
 
@@ -38,7 +42,7 @@ def process_msg(msg, date_):
         total_res.append(res_cash)
     # add to google_spreadsheet
     gc = pygsheets.authorize(service_file='client_secret.json')
-    sheet = gc.open_by_key(os.environ['GS_TOKEN']).worksheet_by_title('Balance')
+    sheet = gc.open_by_key(gs_token).worksheet_by_title('Balance')
     sheet.insert_rows(sheet.rows - 1, len(total_res), values=total_res)
 
 
