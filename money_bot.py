@@ -12,13 +12,14 @@ dispatcher = updater.dispatcher
 
 
 def start(bot, update):
-    bot.send_message(chat_id=update.message.chat_id, text="Hey Roman, send me your expenses in format '^-?\d+\s.+[01]$")
+    bot.send_message(chat_id=update.message.chat_id,
+                     text='Hey Roman, send me your expenses in format ^-?\d+(\.\d+)?\s.+[01]$')
 
 
 def process_string(bot, update):
     msg = update.message.text
     date_ = update.message.date
-    if re.match('^-?\d+\s.+[01]$', msg):
+    if re.match('^-?\d+(\.\d+)?\s.+[01]$', msg):
         process_msg(msg, date_)
         bot.send_message(chat_id=update.message.chat_id, text='Message has been processed')
     else:
