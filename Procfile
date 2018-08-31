@@ -1,1 +1,1 @@
-bot: python3 bot.py
+web: python3 money_bot.py
